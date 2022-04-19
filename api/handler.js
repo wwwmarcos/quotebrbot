@@ -1,12 +1,14 @@
 const path = require('path')
 const { applyText } = require('./image')
 
+const buildImagePath = fileName => path.join(process.cwd(), 'assets', 'images', fileName)
+
 const will = {
   width: 448,
   height: 450,
   limit: 400,
   lineSpace: 40,
-  imagePath: path.join('images', 'will.jpg')
+  imagePath: buildImagePath('will.jpg')
 }
 
 const obama = {
@@ -14,7 +16,7 @@ const obama = {
   height: 512,
   limit: 500,
   lineSpace: 40,
-  imagePath: path.join('images', 'obama.png')
+  imagePath: buildImagePath('obama.png')
 }
 
 const images = [

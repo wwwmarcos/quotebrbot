@@ -1,10 +1,18 @@
-const Canvas = require('canvas')
+const { createCanvas, registerFont, Image } = require('canvas')
+const path = require('path')
+
+const FONT = {
+  family: 'Beau Rivage',
+  path: path.join(process.cwd(), 'assets', 'fonts', 'BeauRivage-Regular.ttf')
+}
+
+const setupFont = () => {
+  registerFont(FONT.path, { family: FONT.family })
+}
 
 const buildCanvas = ({ width, height, imagePath }) => {
-  const canvas = Canvas.createCanvas(width, height)
+  const canvas = createCanvas(width, height)
   const ctx = canvas.getContext('2d')
-
-  const Image = Canvas.Image
   const img = new Image()
 
   img.src = imagePath
@@ -12,7 +20,7 @@ const buildCanvas = ({ width, height, imagePath }) => {
   ctx.clearRect(0, 0, canvas.width, canvas.height)
   ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
 
-  ctx.font = '30px Ariel'
+  ctx.font = `50px ${FONT.family}`
   ctx.fillStyle = 'white'
   ctx.textAlign = 'center'
 
@@ -79,5 +87,6 @@ const applyText = ({ text, image }) => {
 }
 
 module.exports = {
-  applyText
+  applyText,
+  setupFont
 }

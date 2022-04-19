@@ -3,9 +3,12 @@
   "version": "1.0.0",
   "main": "index.js",
   "author": "eptaccio <eptaccio@gmail.com>",
+  "scripts": {
+    "vercel-build": "yum install libuuid-devel libmount-devel && cp /lib64/{libuuid,libmount,libblkid}.so.1 node_modules/canvas/build/Release/"
+  },
   "license": "MIT",
   "dependencies": {
-    "canvas": "^2.6.1",
+    "canvas": "^2.9.1",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "telegraf": "^3.38.0"
