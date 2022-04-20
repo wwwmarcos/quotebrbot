@@ -19,9 +19,18 @@ const obama = {
   imagePath: buildImagePath('obama.png')
 }
 
+const po = {
+  width: 1250,
+  height: 600,
+  limit: 1000,
+  lineSpace: 40,
+  imagePath: buildImagePath('po.jpeg')
+}
+
 const images = [
   { command: 'obama', image: obama },
-  { command: 'will', image: will }
+  { command: 'will', image: will },
+  { command: 'po', image: po }
 ]
 
 const handler = bot => {
