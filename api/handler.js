@@ -1,42 +1,36 @@
-const path = require('path')
 const { applyText } = require('./image')
+const fs = require('fs')
+const path = require('path')
+const sizeOf = require('image-size')
 
-const buildImagePath = fileName => path.join(process.cwd(), 'assets', 'images', fileName)
-
-const will = {
-  width: 448,
-  height: 450,
-  limit: 400,
-  lineSpace: 40,
-  imagePath: buildImagePath('will.jpg')
+const getImagesFromDir = () => {
+  const IMAGES_DIR = path.join(process.cwd(), 'assets', 'images')
+  const files = fs.readdirSync(IMAGES_DIR)
+  return files
 }
 
-const obama = {
-  width: 512,
-  height: 512,
-  limit: 500,
-  lineSpace: 40,
-  imagePath: buildImagePath('obama.png')
+const getCommandName = message => {
+  const match = message.match(/^\/([^\s]+)\s?(.+)?/)
+  return match[1]
 }
 
-const po = {
-  width: 1250,
-  height: 600,
-  limit: 1000,
-  lineSpace: 40,
-  imagePath: buildImagePath('po.jpeg')
-}
+const buildImagePath = fileName =>
+  path.join(process.cwd(), 'assets', 'images', fileName)
 
-const images = [
-  { command: 'obama', image: obama },
-  { command: 'will', image: will },
-  { command: 'po', image: po }
-]
+const getImageInfo = commandName => {
+  const imagePath = buildImagePath(commandName)
+  const dimensions = sizeOf(imagePath)
+
+  return {
+    ...dimensions,
+    limit: dimensions.width - 100,
+    lineSpace: 40,
+    imagePath
+  }
+}
 
 const handler = bot => {
-  const commands = images.map(
-    image => image.command
-  )
+  const commands = getImagesFromDir()
 
   bot.command(commands, async ctx => {
     const text = ctx.message?.text
@@ -45,16 +39,15 @@ const handler = bot => {
       return
     }
 
-    const command = images.find(
-      ({ command }) => text.includes(command)
-    )
-
     const [, ...rest] = text.split(' ')
     const textWithoutCommand = rest.join(' ')
 
+    const commandName = getCommandName(text)
+    const image = getImageInfo(commandName)
+
     const imageStream = applyText({
       text: textWithoutCommand,
-      image: command.image
+      image
     })
 
     await ctx.replyWithPhoto({

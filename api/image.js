@@ -20,7 +20,7 @@ const buildCanvas = ({ width, height, imagePath }) => {
   ctx.clearRect(0, 0, canvas.width, canvas.height)
   ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
 
-  ctx.font = `50px ${FONT.family}`
+  ctx.font = `60px ${FONT.family}`
   ctx.fillStyle = 'white'
   ctx.textAlign = 'center'
 
